@@ -58,8 +58,10 @@ def clean_data(df):
     return df
 
 if __name__ == "__main__":
+    print "Load data"
     df = pd.read_csv("data/items_otodom.pl_080416_10.csv", encoding = 'utf-8')
-
+    pritnt "Clean data"
+    df = clean_data(df)
     # leave only interesting observaions
     df=df[df.price >50]
     df=df[df.price<600]
@@ -67,7 +69,7 @@ if __name__ == "__main__":
     df = df[df.rooms<=4]
 
 
-    # Plot year of construction histogram
+    print "Plot year of construction histogram"
     ax = df.build_year.astype(float).hist(bins=100)
     ax.set_xlim(1900, 2017)
     ax.set_xlabel("Construction year")
@@ -77,7 +79,7 @@ if __name__ == "__main__":
     plt.show()
     plt.close(fig)
 
-    # Plot price/area by rooms
+    print "Plot price/area by rooms"
     g = sns.FacetGrid(df, col="rooms", col_wrap=2)
     g.map(plt.scatter, "pow", "price")
     g.savefig("graphs/price_pow.png")
