@@ -60,7 +60,7 @@ def clean_data(df):
 if __name__ == "__main__":
     print "Load data"
     df = pd.read_csv("data/items_otodom.pl_080416_10.csv", encoding = 'utf-8')
-    pritnt "Clean data"
+    print "Clean data"
     df = clean_data(df)
     # leave only interesting observaions
     df=df[df.price >50]
