@@ -1,7 +1,8 @@
 # SzczecinHome
 ## Szczecin housing market price analysis
 
-author: Mateusz Najsztub <mateusz.najsztub@gmail.com>
+author: Mateusz Najsztub <mateusz.najsztub@gmail
+
 date: 08/04/16
 
 This piece of software is designed to analyse housing market data for Szczecin, Poland scraped using Portia from otodom.pl website. This is a recording of my efforts to learn programming in Python together with some basics of data analysis in software other than commercial Stata, which I seemed to actually like after nearly 3 years of working with it.
