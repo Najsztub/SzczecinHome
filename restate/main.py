@@ -26,8 +26,8 @@ def clean_data(df):
     # Write city, district, 
     df.drop('location', axis = 1, inplace = True)
     df = pd.concat([df, loc], axis =1 )
-    
-    # Leave only Szczecin
+     
+   # Leave only Szczecin
     df = df[df['city'] == "Szczecin"]
     
     # Create year of construction
