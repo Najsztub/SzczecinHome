@@ -84,7 +84,7 @@ if __name__ == "__main__":
     df=df[df.price >50]
     df=df[df.price<600]
     df=df[df['pow'] <250]
-    df = df[df.rooms<=4]
+    df = df[df.rooms<=5]
 
     print "Plot year of construction histogram"
     plot_year_hist("graphs/construction_year_hist.png")
