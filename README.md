@@ -13,3 +13,4 @@ We will see how far will this fun-project go. My intentions are to try my best a
 ### Requirements:
 * Pandas
 * Seaborn
+* Statsmodel
