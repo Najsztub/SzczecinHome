@@ -1,7 +1,7 @@
 # SzczecinHome
 ## Szczecin housing market price analysis
 
-author: Mateusz Najsztub <mateusz.najsztub@gmail
+author: Mateusz Najsztub <mateusz.najsztub@gmail.com>
 
 date: 08/04/16
 
