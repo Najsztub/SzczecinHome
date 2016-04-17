@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
 MN: 11/04/16
-Simple OLS anaysis
+Simple OLS analysis
 '''
 import pandas as pd
 import restate
