@@ -10,17 +10,13 @@ https://www.kaggle.com/c/word2vec-nlp-tutorial/details/part-1-for-beginners-bag-
 import pandas as pd
 import codecs
 import re
-from .restate import clean_data
-
-pDir = ""
+from data.data import clean_data
 
 # Load and clean data
 df = pd.read_csv("data/items_otodom.pl_270316_8.csv")
 df = clean_data(df)
 df=df[df.price >50]
 df=df[df.rooms <=6]
-df = df[[df.columns[0], 'description', 'details', 'pow', 'price', 'floor', 'rooms', 'zabudowa']]
-df.columns = ['id', 'description', 'details', 'pow', 'price', 'floor', 'rooms', 'zabudowa']
 
 # TODO Add column indicatig over- or under-pricing according to OLS model
 import statsmodels.api as sm
@@ -38,20 +34,21 @@ print result.summary()
 df['pred_error'] = result.resid_pearson
 df['price_class'] = 0 + (result.resid_pearson>.4) - (result.resid_pearson<-.4)
 
+print "Cases identified as 0: neutral, -1: underpriced and 1: overpriced"
 print df.price_class.value_counts()
 # -1: overpriced
 
 # Split data to training and model
-train = df[df.id < int(df.shape[0]/1.5)]
-test = df[df.id >= int(df.shape[0]/1.5)]
+train = df[df.index < int(df.shape[0]/1.5)]
+test = df[df.index >= int(df.shape[0]/1.5)]
 
-print train['description'][0]
+#print train['description'][0]
 
 # Remove punctation
 # Load PL stopwords
 # File from: http://www.ranks.nl/stopwords/polish
 
-f = codecs.open(pDir + "data/stopwords_pl", encoding='utf8')
+f = codecs.open("data/stopwords_pl", encoding='utf8')
 
 try:
 	st_pl = f.readlines()
@@ -61,7 +58,7 @@ finally:
 
 st_pl = [w[:-1] for w in st_pl]
 
-print st_pl[0:10]
+#print st_pl[0:10]
 
 
 # Def as function
@@ -77,7 +74,7 @@ clean_desc_test = [desc_to_words(w, st_pl) for  w in test['description']]
 
 # create bag of words
 
-print clean_desc_train[0]
+#print clean_desc_train[0]
 print "Creating the bag of words...\n"
 from sklearn.feature_extraction.text import CountVectorizer
 
@@ -100,7 +97,7 @@ test_data_features = vectorizer.transform(clean_desc_test)
 # array
 train_data_features = train_data_features.toarray()
 test_data_features = test_data_features.toarray()
-print train_data_features.shape
+#print train_data_features.shape
 
 vocab = vectorizer.get_feature_names()
 #print vocab
@@ -122,10 +119,10 @@ result = forest.predict(test_data_features)
 
 # Copy the results to a pandas dataframe with an "id" column and
 # a "sentiment" column
-output = pd.DataFrame( data={"id":test["id"], "price":test["price_class"], "gen":result} )
+output = pd.DataFrame( data={"id":test.index, "price":test["price_class"], "gen":result} )
 
 output['test'] = output['gen'] == output['price']
 print("Fit accuracy: {0:.2f}%").format(output['test'].mean()*100)
 
 # Use pandas to write the comma-separated output file
-output.to_csv( pDir+"data/Bag_of_Words_model.csv", index=False, quoting=3 )
+output.to_csv("data/Bag_of_Words_model.csv", index=False, quoting=3 )
