@@ -10,11 +10,13 @@ https://www.kaggle.com/c/word2vec-nlp-tutorial/details/part-1-for-beginners-bag-
 import pandas as pd
 import codecs
 import re
+from .restate import clean_data
 
 pDir = ""
 
 # Load and clean data
-df = pd.read_csv(pDir+"data/items_otodom.pl_270316_8_clean.csv")
+df = pd.read_csv("data/items_otodom.pl_270316_8.csv")
+df = clean_data(df)
 df=df[df.price >50]
 df=df[df.rooms <=6]
 df = df[[df.columns[0], 'description', 'details', 'pow', 'price', 'floor', 'rooms', 'zabudowa']]
