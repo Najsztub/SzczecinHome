@@ -11,6 +11,8 @@ We will see how far will this fun-project go. My intentions are to try my best a
 
 
 ### Requirements:
+* Numpy, Scipy, Matplotlib
 * Pandas
 * Seaborn
 * Statsmodel
+* ScikitLearn
