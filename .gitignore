@@ -1,0 +1,7 @@
+# Byte-compilled files
+*.pyc
+
+# Data directory with csv files
+data/
+
+*.png
