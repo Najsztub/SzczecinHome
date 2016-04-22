@@ -19,7 +19,7 @@ df = clean_data(df)
 df=df[df.price >50]
 df=df[df.rooms <=6]
 # Load and clean train data
-test = data_clean(pd.read_csv("data/items_otodom.pl_080416_10.csv"))
+test = clean_data(pd.read_csv("data/items_otodom.pl_210416_12.csv"))
 test=test[test.price >50]
 test=test[test.rooms <=6]
 
@@ -70,7 +70,31 @@ def desc_to_words(raw_text, st=None):
     else:
         return(words)
 
+# Split house dscription into sentences
+import nltk.data
+tokenizer = nltk.data.load('tokenizers/punkt/polish.pickle')
 
+def desc_to_sentences(desc, tokenizer, st = None):
+    # Use NLTK tokenizer to split house description into sentences
+    raw_sentences = tokenizer.tokenize(desc.strip().decode('utf8'))
+    # Loop over sentences
+    sentences = []
+    for sent in raw_sentences:
+        # Skip if there are no sentences
+        if len(sent) > 0 :
+            # Get list of words in a sentence otherwise and append
+            sentences.append(desc_to_words(sent, st = st))
+    return sentences
 
+# Initialize empty sentence list
+sentences = []
+# Create sentences for training and test data
+print "Parsing sentences from training data"
+for desc in train['description']:
+    sentences += desc_to_sentences(desc, tokenizer)
+print "Parsing sentences from t data"
+for desc in test['description']:
+    sentences += desc_to_sentences(desc, tokenizer)
 
-	
+print "We have %d sentences in test and training data"%(len(sentences))
+
