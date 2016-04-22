@@ -47,3 +47,30 @@ train = df
 '''
 Stopped selecting the data, now we can continue with our model from example 2
 '''
+# Remove punctation
+# Load PL stopwords
+# File from: http://www.ranks.nl/stopwords/polish
+
+f = codecs.open("data/stopwords_pl", encoding='utf8')
+try:
+    st_pl = f.readlines()
+finally:
+    f.close()
+
+st_pl = [w[:-1] for w in st_pl]
+
+# Define function returning words from text with optional stopwords
+def desc_to_words(raw_text, st=None):
+    words = raw_text.lower().split()
+    if st is not None:
+        stops = set(st) 
+        meaningful_words = [w for w in words if not w in stops] 
+        return(meaningful_words)
+        #return( " ".join( meaningful_words ))
+    else:
+        return(words)
+
+
+
+
+	
