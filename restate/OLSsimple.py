@@ -4,7 +4,7 @@ MN: 11/04/16
 Simple OLS analysis
 '''
 import pandas as pd
-import restate
+import data.data as restate
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 
