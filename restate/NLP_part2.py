@@ -140,5 +140,9 @@ if sys.argv[1] == "-l":
     # Load model
     model = word2vec.Word2Vec.load(sys.argv[2])
 # Test model
-model.doesnt_match("zlew wanna prysznic piekarnik".split())
-model.most_similar("wanna")
+print 'model.doesnt_match("zlew wanna prysznic piekarnik".split())'
+print model.doesnt_match("zlew wanna prysznic piekarnik".split())
+print 'model.most_similar("wanna")'
+print model.most_similar("wanna")
+
+#
