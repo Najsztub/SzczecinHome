@@ -11,4 +11,11 @@ import scrapy
 class HomespiderItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    description = scrapy.Field()
+    details = scrapy.Field()
+    location = scrapy.Field()
+    floor = scrapy.Field()
+    rooms = scrapy.Field()
+    pow = scrapy.Field()
+    price = scrapy.Field()
+
