@@ -10,19 +10,27 @@ class SzczecinSpider(CrawlSpider):
         'http://otodom.pl/sprzedaz/mieszkanie/szczecin/?search[dist]=0',
     )
     rules = (
-        Rule(LinkExtractor(allow='\.html$', ), follow=True, callback='parse_page'),
-        Rule(LinkExtractor(allow='sprzedaz/mieszkanie/szczecin/\?search%5Bdescription%5D=1&search%5Bdist%5D=0&page=[0-9]+'), follow=True,
+        Rule(LinkExtractor(allow=('page=[0-9]+'),
+             restrict_xpaths=('//ul[@class="pager"]',)),
+             follow=True,
         ),
-        Rule(LinkExtractor(deny=('dom-'))),
-        Rule(LinkExtractor(deny=('dzialka'))),
-        Rule(LinkExtractor(deny=('garaz'))),
-        Rule(LinkExtractor(deny=('hala'))),
-        Rule(LinkExtractor(deny=('uzytkowy'))),
-        Rule(LinkExtractor(deny=('wynajem'))),
+        Rule(LinkExtractor(allow=('\.html' ),
+                           restrict_xpaths=('//div[@class="col-md-content"]',),
+                           deny=('dom-','dzialka','garaz','hala', 'uzytkowy', 'wynajem')), callback='parse_page'),
+        
     )
 
     def parse_page(self, response):
         self.logger.info('Hi, this is an item page! %s', response.url)
-        filename = response.url.split("/")[-2] + '.html'
+        '''filename = response.url.split("/")[-1]
         with open(filename, 'wb') as f:
-            f.write(response.body)
+            f.write(response.body)'''
+
+'''Rule(LinkExtractor(deny=('dom-'))),
+Rule(LinkExtractor(deny=('dzialka'))),
+Rule(LinkExtractor(deny=('garaz'))),
+Rule(LinkExtractor(deny=('hala'))),
+Rule(LinkExtractor(deny=('uzytkowy'))),
+Rule(LinkExtractor(deny=('wynajem'))),
+'''
+#Rule(LinkExtractor(allow='\.html$', ), follow=True, callback='parse_page')
