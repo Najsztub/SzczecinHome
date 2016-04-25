@@ -18,4 +18,7 @@ class HomespiderItem(scrapy.Item):
     rooms = scrapy.Field()
     pow = scrapy.Field()
     price = scrapy.Field()
+    url = scrapy.Field()
+    town = scrapy.Field()
+    sellType = scrapy.Field()
 
