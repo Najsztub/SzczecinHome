@@ -2,6 +2,7 @@
 import scrapy
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
+from homeSpider.items import HomespiderItem
 
 class SzczecinSpider(CrawlSpider):
     scraped = 0
@@ -27,9 +28,9 @@ class SzczecinSpider(CrawlSpider):
     )
 
     def parse_page(self, response):
-        scraped += 1
-        if scraped % 100 == 0:
-            self.logger.info('scraped %d sites', scraped)
+        #scraped += 1
+        #if scraped % 100 == 0:
+        #    self.logger.info('scraped %d sites', scraped)
         
         # Create item
         item = HomespiderItem()
