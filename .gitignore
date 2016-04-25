@@ -1,6 +1,6 @@
 # Byte-compilled files
 *.pyc
-
+*.pyo
 # Data directory with csv files
 data/
 
