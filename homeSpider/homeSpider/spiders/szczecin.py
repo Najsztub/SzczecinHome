@@ -30,34 +30,39 @@ class SzczecinSpider(CrawlSpider):
         scraped += 1
         if scraped % 100 == 0:
             self.logger.info('scraped %d sites', scraped)
+        
+        # Create item
         item = HomespiderItem()
+        
+        # Extract dwelling details
         main_data = response.xpath(
             '//ul[@class="main-list"]/li/span/strong/text()'
         ).extract()
-        address = response.xpath('//address/p/a/text()').extract()
-        
+
         item['url'] = response.url
         item['price'] = main_data[0]
         item['pow'] = main_data[1]
         item['rooms'] = main_data[2]
         item['floor'] = main_data[3]
-
+        
+        # Extract dwelling address
+        address = response.xpath('//address/p/a/text()').extract()
+            
         item['location'] = ', '.join(address)
         item['town'] = address[1]
         item['sellType'] = address[0]
         
+        # Add short title
         item['description'] = response.xpath(
             '//header[@class="col-md-offer-content"]/h1/text()'
         ).extract()
-
+        
+        # Add house description paragraphs 
         opis = response.xpath(
             '//div[@class="col-md-offer-content"]/p/text()'
         ).extract()
 
         item['details'] = ''.join(opis)
-
         
-        '''filename = response.url.split("/")[-1]
-        with open(filename, 'wb') as f:
-            f.write(response.body)'''
-
+        # Return the filled item
+        return item
