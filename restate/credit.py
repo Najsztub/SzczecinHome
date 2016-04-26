@@ -150,7 +150,7 @@ def by_prc(kwota, t, rates, inflation = 0):
 if __name__ == "__main__":
     # test_zmienne()
     # compare_opr(100000, 20, 5.8/100, 0.025, plot = False)
-    
+    showOnly = True
     # Loop by years
     for y in [25, 20]:
         # Generate data for 4 different amounts
@@ -166,8 +166,10 @@ if __name__ == "__main__":
         ax.set_xlabel("Oprocentowanie [%]")
         ax.set_ylabel(u"Rata [zł/msc]")
         fig = ax.get_figure()
-        fig.savefig("graphs/rata_st_%s_lat.png"%(y))
-        #plt.show()
+        if not showOnly:
+            fig.savefig("graphs/rata_st_%s_lat.png"%(y))
+        else:
+            plt.show()
         plt.close(fig)
         
         # Plot total cost by rate and credit
@@ -178,8 +180,10 @@ if __name__ == "__main__":
         ax.set_xlabel("Oprocentowanie [%]")
         ax.set_ylabel(u"Odstetki kredytu [zł/msc]")
         fig = ax.get_figure()
-        fig.savefig("graphs/koszt_st_%s_lat.png"%(y))
-        #plt.show()
+        if not showOnly:
+            fig.savefig("graphs/koszt_st_%s_lat.png"%(y))
+        else:
+            plt.show()
         plt.close(fig)
         
         # Plot total cost /koszt kredytu by rate and credit
@@ -190,8 +194,10 @@ if __name__ == "__main__":
         ax.set_xlabel("Oprocentowanie [%]")
         ax.set_ylabel(u"Odstetki kredytu [proporcjonalnie]")
         fig = ax.get_figure()
-        fig.savefig("graphs/koszt_prop_st_%s_lat.png"%(y))
-        #plt.show()
+        if not showOnly:
+            fig.savefig("graphs/koszt_prop_st_%s_lat.png"%(y))
+        else:
+            plt.show()
         plt.close(fig)
 
     
