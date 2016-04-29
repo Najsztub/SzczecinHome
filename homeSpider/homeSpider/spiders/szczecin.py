@@ -64,6 +64,23 @@ class SzczecinSpider(CrawlSpider):
         ).extract()
 
         item['details'] = ''.join(opis)
+
+        # Lat and log data
+        item['data_lat'] = response.xpath(
+            '//div[@id="adDetailInlineMap"]/@data-lat'
+        ).extract()[0]
+        
+        item['data_lon'] = response.xpath(
+            '//div[@id="adDetailInlineMap"]/@data-lon'
+        ).extract()[0]
+
+        item['poi_lat'] = response.xpath(
+            '//div[@id="adDetailInlineMap"]/@data-poi-lat'
+        ).extract()[0]
+
+        item['poi_lon'] = response.xpath(
+            '//div[@id="adDetailInlineMap"]/@data-poi-lon'
+        ).extract()[0]
         
         # Return the filled item
         return item

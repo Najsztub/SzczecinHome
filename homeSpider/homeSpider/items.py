@@ -21,4 +21,8 @@ class HomespiderItem(scrapy.Item):
     url = scrapy.Field()
     town = scrapy.Field()
     sellType = scrapy.Field()
+    data_lat = scrapy.Field()
+    data_lon = scrapy.Field()
+    poi_lat = scrapy.Field()
+    poi_lon = scrapy.Field()
 
