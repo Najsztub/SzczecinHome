@@ -19,6 +19,7 @@ We will see how far will this fun-project go. My intentions are to try my best a
 * NLTK
 * Scrapy
 * gensim
+* Smopy
 
 ## Change Log
 
