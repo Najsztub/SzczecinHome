@@ -17,14 +17,14 @@ NEWSPIDER_MODULE = 'homeSpider.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'homeSpider (+http://www.yourdomain.com)'
-
+ER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:7.0.1) Gecko/20100101 Firefox/7.7'
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS=32
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY=3
+DOWNLOAD_DELAY=0.5
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN=16
 #CONCURRENT_REQUESTS_PER_IP=16
@@ -33,7 +33,7 @@ NEWSPIDER_MODULE = 'homeSpider.spiders'
 #COOKIES_ENABLED=False
 
 # Disable Telnet Console (enabled by default)
-#TELNETCONSOLE_ENABLED=False
+TELNETCONSOLE_ENABLED=False
 
 # Override the default request headers:
 #DEFAULT_REQUEST_HEADERS = {

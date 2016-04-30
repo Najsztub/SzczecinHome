@@ -53,7 +53,7 @@ ax = df.plot(kind='hexbin', y='data_lat', x='data_lon', C='price',
 ax.set_xlabel("Longitude")
 ax.set_ylabel("Latitude")
 fig = ax.get_figure()
-fig.savefig("graphs/price_map_%s.png"%date)
+fig.savefig("graphs/price_map_%s.png"%date, dpi=300)
 
 ########################################
 # Plot hexbin map

@@ -63,7 +63,7 @@ class SzczecinSpider(CrawlSpider):
             '//div[@class="col-md-offer-content"]/p/text()'
         ).extract()
 
-        item['details'] = ''.join(opis)
+        item['details'] = ' '.join(opis)
 
         # Lat and log data
         item['data_lat'] = response.xpath(
