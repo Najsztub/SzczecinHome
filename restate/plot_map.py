@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 import seaborn as sns
 import smopy
-from data.data import clean_data
+#from data.data import clean_data
 
 matplotlib.style.use('ggplot')
 date = "290416"
@@ -25,6 +25,17 @@ df['price'] = df.price.str.replace(" zł", "")
 df['price'] = df.price.str.replace(" ", "")
 df['price'] = df.price.str.replace(",", ".")
 df['price'] = df.price.astype("float")
+
+# Replace square meters as number
+df['pow'] = df['pow'].str.replace("[^0-9,\.]", "")
+df['pow'] = df['pow'].str.replace(",", ".")
+df['pow'] = df['pow'].astype("float")
+
+# Generate price per sq_meter
+df['sq_price'] = df['price']/df['pow']
+
+# Remove houses priced above 99.9% of prices
+df = df[df.sq_price < df.sq_price.quantile(0.999)]
 
 # Szczecin + Prawobrzeże
 min_lat = 53.35
@@ -44,9 +55,10 @@ ax.set_ylabel("Latitude")
 fig = ax.get_figure()
 fig.savefig("graphs/price_map_%s.png"%date)
 
+########################################
 # Plot hexbin map
 
-df = df[df.price < 600000]
+#df = df[df.price < 600000]
 
 # Szczecin: Lewobrzeże
 min_lat = 53.38
@@ -64,19 +76,31 @@ map = smopy.Map((min_lat, min_lon, max_lat, max_lon), z=13)
 print "Done"
 
 dd=map.to_pixels(df.data_lat, df.data_lon)
-pdf = pd.DataFrame({'lon':dd[0], 'lat':dd[1], 'price':df['price']})
+pdf = pd.DataFrame({
+    'lon':dd[0],
+    'lat':dd[1],
+    'price':df['price'],
+    'sq_price':df['sq_price']
+    })
 
 img = map.to_pil()
 dpi = 300
 img_size = (2*img.size[0]/dpi, 1.6*img.size[1]/dpi)
-# Clear plot area
-plt.figure(figsize = img_size, dpi = dpi)
-plt.axis("off")
-plt.imshow(img)
-plt.hexbin(y=pdf['lat'], x=pdf['lon'], C=pdf['price'],reduce_C_function=np.mean, gridsize = 50, cmap=plt.cm.Spectral_r, alpha = 0.75)
-cb = plt.colorbar(fraction=0.046, pad=0.04)
-cb.set_label('House price [PLN]')
-plt.tight_layout()
-plt.savefig("graphs/price_map_%s_withMap.png"%date, dpi=dpi)
+# Plot price and price per sq_meter
+for p in ['price', 'sq_price']:
+    print "Plot %s"%p
+    # Clear plot area
+    plt.figure(figsize = img_size, dpi = dpi)
+    plt.axis("off")
+    plt.imshow(img)
+    plt.hexbin(y=pdf['lat'], x=pdf['lon'], C=pdf[p],
+               reduce_C_function=np.mean, gridsize = 50,
+               cmap=plt.cm.Spectral_r, alpha = 0.75)
+    cb = plt.colorbar(fraction=0.046, pad=0.04)
+    cb.set_label('House price [PLN]')
+    plt.tight_layout()
+    plt.savefig(
+        "graphs/price_map_%s_%s_withMap.png"%(date, p),
+        dpi=dpi)
 
 
