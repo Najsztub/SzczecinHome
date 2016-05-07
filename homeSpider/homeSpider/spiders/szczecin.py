@@ -6,7 +6,10 @@ from homeSpider.items import HomespiderItem
 from re import sub
 
 def valToFloat(pr):
-    return float(sub(r'[^\d,.]', '', pr).replace(",", "."))
+    try:
+        return float(sub(r'[^\d,.]', '', pr).replace(",", "."))
+    except ValueError:
+        return pr
 
 class SzczecinSpider(CrawlSpider):
     scraped = 0
@@ -70,19 +73,19 @@ class SzczecinSpider(CrawlSpider):
         item['details'] = ' '.join(opis)
 
         # Lat and log data
-        item['data_lat'] = float(response.xpath(
+        item['data_lat'] = valToFloat(response.xpath(
             '//div[@id="adDetailInlineMap"]/@data-lat'
         ).extract()[0])
         
-        item['data_lon'] = float(response.xpath(
+        item['data_lon'] = valToFloat(response.xpath(
             '//div[@id="adDetailInlineMap"]/@data-lon'
         ).extract()[0])
 
-        item['poi_lat'] = float(response.xpath(
+        item['poi_lat'] = valToFloat(response.xpath(
             '//div[@id="adDetailInlineMap"]/@data-poi-lat'
         ).extract()[0])
 
-        item['poi_lon'] = float(response.xpath(
+        item['poi_lon'] = valToFloat(response.xpath(
             '//div[@id="adDetailInlineMap"]/@data-poi-lon'
         ).extract()[0])
         
