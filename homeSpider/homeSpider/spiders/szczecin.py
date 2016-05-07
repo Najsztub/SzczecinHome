@@ -3,6 +3,10 @@ import scrapy
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from homeSpider.items import HomespiderItem
+from re import sub
+
+def valToFloat(pr):
+    return float(sub(r'[^\d,.]', '', pr).replace(",", "."))
 
 class SzczecinSpider(CrawlSpider):
     scraped = 0
@@ -41,8 +45,8 @@ class SzczecinSpider(CrawlSpider):
         ).extract()
 
         item['url'] = response.url
-        item['price'] = main_data[0]
-        item['pow'] = main_data[1]
+        item['price'] = valToFloat(main_data[0])
+        item['pow'] = valToFloat(main_data[1])
         item['rooms'] = main_data[2]
         item['floor'] = main_data[3]
         
@@ -66,21 +70,21 @@ class SzczecinSpider(CrawlSpider):
         item['details'] = ' '.join(opis)
 
         # Lat and log data
-        item['data_lat'] = response.xpath(
+        item['data_lat'] = float(response.xpath(
             '//div[@id="adDetailInlineMap"]/@data-lat'
-        ).extract()[0]
+        ).extract()[0])
         
-        item['data_lon'] = response.xpath(
+        item['data_lon'] = float(response.xpath(
             '//div[@id="adDetailInlineMap"]/@data-lon'
-        ).extract()[0]
+        ).extract()[0])
 
-        item['poi_lat'] = response.xpath(
+        item['poi_lat'] = float(response.xpath(
             '//div[@id="adDetailInlineMap"]/@data-poi-lat'
-        ).extract()[0]
+        ).extract()[0])
 
-        item['poi_lon'] = response.xpath(
+        item['poi_lon'] = float(response.xpath(
             '//div[@id="adDetailInlineMap"]/@data-poi-lon'
-        ).extract()[0]
+        ).extract()[0])
         
         # Return the filled item
         return item
