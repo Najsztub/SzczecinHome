@@ -67,7 +67,7 @@ class SzczecinSpider(CrawlSpider):
         
         # Add house description paragraphs 
         opis = response.xpath(
-            '//div[@class="col-md-offer-content"]/p/text()'
+            '//div[@itemprop="description"]/p/text()'
         ).extract()
 
         item['details'] = ' '.join(opis)
